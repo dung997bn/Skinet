@@ -23,7 +23,6 @@ namespace API
                 try
                 {
                     var context = services.GetRequiredService<StoreContext>();
-                    //await context.Database.M
                      StoreContextSeed.SeedAsync(context, loggerFactory).Wait();
                 }
                 catch (Exception ex)
