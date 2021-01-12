@@ -9,3 +9,4 @@ bin
 !.vscode/extensions.json
 *.code-workspace
 .idea
+API/wwwroot/debug.log
