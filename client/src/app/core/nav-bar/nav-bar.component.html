@@ -7,10 +7,11 @@
     <a class="p-2" routerLink="/test-error" routerLinkActive="active">Errors</a>
   </nav>
   <div class="d-flex align-items-center">
-    <!-- <a routerLink="/basket" class="position-relative"> 
-        <i class="fa fa-shopping-cart fa-2x mr-5 text-dark">< /i>
-        <div *ngIf="(basket$ | async)" class="cart-no">{{(basket$ | async).items.length}}</div>
-      </a> -->
+    <a routerLink="/basket" class="position-relative">
+      <i class="fa fa-shopping-cart fa-2x mr-5 text-dark"> </i>
+      <div class="cart-no">5</div>
+    </a>
+    <!-- <div *ngIf="(basket$ | async)" class="cart-no">{{(basket$ | async).items.length}}</div> </a> -->
     <!-- <ng-container *ngIf="(currentUser$ | async) === null">
         <a routerLink="/account/login" class="btn btn-outline-secondary mr-2">Login</a>
         <a routerLink="/account/register" class="btn btn-outline-secondary mr-3">Sign up</a>
@@ -32,11 +33,8 @@
             <a (click)="logout()" class="dropdown-item d-flex align-items-center py-2">
               <i class="fa fa-sign-out mr-3"></i> Logout
             </a>
-          </div>
-        </div>
-      
-      </ng-container> -->
+          </div> -->
 
+    <!-- </ng-container>  -->
   </div>
-
 </div>
