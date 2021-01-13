@@ -11,6 +11,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { BasketModule } from './basket/basket.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { BasketModule } from './basket/basket.module';
     ShopModule,
     HomeModule,
     BasketModule,
+    CheckoutModule,
     NgxSpinnerModule
   ],
   providers: [

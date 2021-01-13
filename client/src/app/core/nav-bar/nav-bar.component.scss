@@ -1,18 +1,29 @@
-.cart-no{
+.cart-no {
     position: absolute;
+    min-height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    font-size: 1em;
+    background: orangered;
+    color: white;
+    text-align: center;
+    top: -12px;
+    right: 32px;
 }
 
-a{
+a {
     text-decoration: none;
     color: #343a40;
-    &.active{
+
+    &.active {
         color: orange;
     }
 }
 
-.logo{
+.logo {
     cursor: pointer;
-    & :focus{
+
+    &:focus {
         outline: none;
     }
 }

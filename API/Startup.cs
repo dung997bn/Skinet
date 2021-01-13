@@ -4,6 +4,7 @@ using API.Middleware;
 using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,7 +46,10 @@ namespace API
             });
             services.AddDbContext<StoreContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
-
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
+            });
 
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
