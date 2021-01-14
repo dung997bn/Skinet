@@ -5,7 +5,7 @@
                 <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             </div>
 
-            <div class="form-label-group">
+            <!-- <div class="form-label-group">
                 <input formControlName="email" type="email" id="inputEmail" class="form-control"
                     placeholder="Email address" />
                 <label for="inputEmail">Email address</label>
@@ -13,25 +13,18 @@
                     *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched && loginForm.get('email')!.getError('required')">
                     Email address is required
                 </span>
-            </div>
-
-            <div class=" form-label-group">
-                <input formControlName="password" type="password" id="inputPassword" class="form-control"
-                    placeholder="Password" />
-                <label for="inputPassword">Password</label>
                 <span class="text-danger"
-                    *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched && loginForm.get('password')!.getError('required')">
-                    Password is required
+                    *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched && loginForm.get('email')!.getError('pattern')">
+                    Email address is not valid
                 </span>
-            </div>
+            </div> -->
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <app-text-input formControlName="email" [label]="'Email address'"></app-text-input>
+            <app-text-input formControlName="password" [label]="'Password'"></app-text-input>
+
+            <button [disabled]="loginForm.invalid" class="btn btn-lg btn-primary btn-block" type="submit">Sign
+                in</button>
             <p class="mt-5 mb-3 text-muted text-center">© 2017-2019</p>
         </form>
-    </div>
-    <div class="col-4">
-        <p>{{loginForm.status}}</p>
-        <p>{{loginForm.get('email')!.errors | json}}</p>
-        <p>{{loginForm.get('email')!.getError('required')}}</p>
     </div>
 </div>

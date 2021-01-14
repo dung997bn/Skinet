@@ -1,0 +1,12 @@
+<div class="form-label-group">
+    <input #input
+        [ngClass]="(controlDir && controlDir.control && controlDir.touched) ? !controlDir.valid ? 'is-invalid' :'isvalid' : ''"
+        [type]="type" (input)="onChange($event.target?.value)" (blur)="onTouched()" id="{{label}}" class="form-control"
+        placeholder="{{label}}" />
+
+    <label for="{{label}}">{{label}}</label>
+    <div class="invalid-feedback" *ngIf="controlDir && controlDir.control && !controlDir.valid && controlDir.touched">
+        <span *ngIf="controlDir.getError('required')">{{label}} is required</span>
+        <span *ngIf="controlDir.getError('pattern')">{{label}} is not invalid</span>
+    </div>
+</div>
