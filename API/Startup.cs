@@ -8,6 +8,7 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -86,6 +87,7 @@ namespace API
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IOrderService, OrderService>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(MappingProfile));
 
 
