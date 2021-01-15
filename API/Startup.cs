@@ -84,6 +84,7 @@ namespace API
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddAutoMapper(typeof(MappingProfile));
 

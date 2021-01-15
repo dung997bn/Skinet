@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/models/user';
@@ -11,16 +11,16 @@ import { IUser } from '../shared/models/user';
 })
 export class AccountService {
   baseUrl = environment.apiUrl
-  private currentUserSource = new BehaviorSubject<IUser | null>(null)
+  private currentUserSource = new ReplaySubject<IUser | null>(1)
   currentUser$ = this.currentUserSource.asObservable()
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getCurrentUserValue() {
-    return this.currentUserSource.value
-  }
-
-  loadCurrentUser(token: string) {
+  loadCurrentUser(token: string | null) {
+    if (token === null) {
+      this.currentUserSource.next(null)
+      return new Observable<any>(undefined);
+    }
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${token}`)
     return this.http.get(this.baseUrl + 'account', { headers }).pipe(
@@ -62,6 +62,6 @@ export class AccountService {
   }
 
   checkEmailExists(email: string) {
-    return this.http.get(this.baseUrl + 'account/mailexists?email=' + email)
+    return this.http.get(this.baseUrl + 'account/emailexists?email=' + email)
   }
 }
