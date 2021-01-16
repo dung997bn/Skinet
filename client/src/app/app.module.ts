@@ -13,6 +13,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { BasketModule } from './basket/basket.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { AccountModule } from './account/account.module';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,12 +28,13 @@ import { AccountModule } from './account/account.module';
     BasketModule,
     CheckoutModule,
     AccountModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
