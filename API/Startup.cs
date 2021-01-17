@@ -86,7 +86,7 @@ namespace API
 
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IOrderService, OrderService>();
-
+            services.AddTransient<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(MappingProfile));
 
