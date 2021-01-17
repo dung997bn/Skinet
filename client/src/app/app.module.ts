@@ -14,6 +14,7 @@ import { BasketModule } from './basket/basket.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { AccountModule } from './account/account.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
     CheckoutModule,
     AccountModule,
     NgxSpinnerModule,
+    OrdersModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
