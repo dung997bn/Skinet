@@ -58,8 +58,6 @@ namespace API
             builder.AddEntityFrameworkStores<AppIdentityDbContext>();
             builder.AddSignInManager<SignInManager<AppUser>>();
 
-
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -79,6 +77,8 @@ namespace API
             {
                 x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
             });
+
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
 
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
