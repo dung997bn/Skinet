@@ -18,13 +18,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,13 +73,6 @@ namespace API
                         ValidateAudience = false
                     };
                 });
-
-            services.AddDbContext<StoreContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddDbContext<AppIdentityDbContext>(x =>
-            {
-                x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
-            });
 
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
 
@@ -137,6 +133,39 @@ namespace API
             });
         }
 
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<StoreContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseSqlite(Configuration.GetConnectionString("IdentityConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<StoreContext>(x => x.UseMySql(
+                Configuration.GetConnectionString("DefaultConnection"),
+                new MySqlServerVersion(new Version(8, 0, 21)), // use MariaDbServerVersion for MariaDB
+                        mySqlOptions => mySqlOptions
+                            .CharSetBehavior(CharSetBehavior.NeverAppend)));
+
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseMySql(
+                    Configuration.GetConnectionString("IdentityConnection"),
+                    new MySqlServerVersion(new Version(8, 0, 21)), // use MariaDbServerVersion for MariaDB
+                        mySqlOptions => mySqlOptions
+                            .CharSetBehavior(CharSetBehavior.NeverAppend)
+
+                    );
+            });
+            ConfigureServices(services);
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -145,6 +174,14 @@ namespace API
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Content")
+                    ),
+                RequestPath = "/content"
+
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -159,6 +196,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }

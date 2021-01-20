@@ -7,15 +7,16 @@ import { map } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
 import { IProduct } from '../shared/models/product';
 import { of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
-  baseurl = 'https://localhost:44350/api/';
+  baseurl = environment.apiUrl;
   products: IProduct[] = [];
   brands: IBrand[] = [];
   types: IType[] = [];
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(shopParams: ShopParams) {
     let params = new HttpParams();
@@ -40,7 +41,7 @@ export class ShopService {
         params,
       })
       .pipe(
-        map((response :any) => {
+        map((response: any) => {
           return response.body;
         })
       );

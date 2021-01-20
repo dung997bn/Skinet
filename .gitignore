@@ -10,3 +10,5 @@ bin
 *.code-workspace
 .idea
 API/wwwroot/debug.log
+wwwroot
+publish
